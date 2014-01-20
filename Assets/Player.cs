@@ -19,6 +19,9 @@ public class Player : MonoBehaviour
     {
         int sw = Screen.width;
         int sh = Screen.height;
+
+        //////////////////////////////////////////////////////
+        /// process move forward / backward / right / left
         Vector3 blPos = Camera.main.ScreenToWorldPoint (new Vector3 (0, 0, 128));
         Vector3 rtPos = Camera.main.ScreenToWorldPoint (new Vector3 (sw, sh, 128));
         
@@ -29,8 +32,27 @@ public class Player : MonoBehaviour
         float verticalMove = Input.GetAxis ("Vertical");
         Vector3 pos = transform.localPosition;
 
-        pos.x += horizontalMove;
-        pos.z += verticalMove;
+        bool absoluteMove = false;
+        if (absoluteMove) {
+            pos.x += horizontalMove;
+            pos.z += verticalMove;
+        } else {
+            float sensitivityV = 0.8f;
+            float sensitivityH = 0.8f;
+            if (verticalMove > 0) {
+                pos += transform.forward * sensitivityV;
+            }
+            else if (verticalMove < 0) {
+                pos -= transform.forward * sensitivityV;
+            }
+
+            if (horizontalMove > 0) {
+                pos += transform.right * sensitivityH;
+            }
+            else if (horizontalMove < 0) {
+                pos -= transform.right * sensitivityH;
+            }
+        }
 
         if (pos.x < blPos.x) {
             pos.x = blPos.x;
@@ -57,25 +79,30 @@ public class Player : MonoBehaviour
 
         transform.localPosition = pos;
 
-		float rotateRate = 0.0f;
-		if (Input.GetKey("z")) {
-			rotateRate -= 1.0f;
-		}
-		if (Input.GetKey("x")) {
-			rotateRate += 1.0f;
-		}
-		if (rotateRate != 0.0f) {
-			transform.rotation *= Quaternion.AngleAxis(rotateRate * 4.0f, new Vector3(0,1,0));
-		}
+
+        //////////////////////////////////////////////////////
+        /// process rotation
+
+
+        float rotateRate = 0.0f;
+        if (Input.GetKey ("z")) {
+            rotateRate -= 1.0f;
+        }
+        if (Input.GetKey ("x")) {
+            rotateRate += 1.0f;
+        }
+        if (rotateRate != 0.0f) {
+            transform.rotation *= Quaternion.AngleAxis (rotateRate * 4.0f, new Vector3 (0, 1, 0));
+        }
 
 
         fireTimer -= Time.deltaTime;
         if (fireTimer < 0.0f) {
             Vector3 bulletStartPos = transform.position;
-			bulletStartPos += ((transform.forward.normalized) * 4.0f);
+            bulletStartPos += ((transform.forward.normalized) * 4.0f);
             GameObject bullet = (GameObject)Instantiate (bulletPrefab, bulletStartPos, transform.localRotation);
             bullet.transform.parent = stage.transform;
-			bullet.transform.rotation = transform.rotation;
+            bullet.transform.rotation = transform.rotation;
             bullet.transform.rotation *= Quaternion.AngleAxis (90, Vector3.right);
 
 
