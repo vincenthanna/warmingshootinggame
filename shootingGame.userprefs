@@ -1,0 +1,28 @@
+﻿<Properties>
+  <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug" />
+  <MonoDevelop.Ide.Workbench ActiveDocument="Assets/Player.cs">
+    <Files>
+      <File FileName="Assets/Enemy/Enemy.cs" Line="10" Column="31" />
+      <File FileName="Assets/StageController.cs" Line="1" Column="1" />
+      <File FileName="Assets/Player.cs" Line="64" Column="63" />
+      <File FileName="Assets/Bullet/Bullet.cs" Line="1" Column="1" />
+      <File FileName="Assets/Enemy/EnemyGenerator.cs" Line="1" Column="1" />
+      <File FileName="Assets/Enemy/EnemyTypes.cs" Line="1" Column="1" />
+    </Files>
+    <Pads>
+      <Pad Id="ProjectPad">
+        <State expanded="True">
+          <Node name="Assembly-CSharp" expanded="True">
+            <Node name="Bullet" expanded="True" />
+            <Node name="Enemy" expanded="True" />
+            <Node name="Player.cs" selected="True" />
+          </Node>
+        </State>
+      </Pad>
+    </Pads>
+  </MonoDevelop.Ide.Workbench>
+  <MonoDevelop.Ide.DebuggingService.Breakpoints>
+    <BreakpointStore />
+  </MonoDevelop.Ide.DebuggingService.Breakpoints>
+  <MonoDevelop.Ide.DebuggingService.PinnedWatches />
+</Properties>
