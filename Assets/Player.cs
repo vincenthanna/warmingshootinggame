@@ -57,13 +57,27 @@ public class Player : MonoBehaviour
 
         transform.localPosition = pos;
 
+		float rotateRate = 0.0f;
+		if (Input.GetKey("z")) {
+			rotateRate -= 1.0f;
+		}
+		if (Input.GetKey("x")) {
+			rotateRate += 1.0f;
+		}
+		if (rotateRate != 0.0f) {
+			transform.rotation *= Quaternion.AngleAxis(rotateRate * 4.0f, new Vector3(0,1,0));
+		}
+
+
         fireTimer -= Time.deltaTime;
         if (fireTimer < 0.0f) {
             Vector3 bulletStartPos = transform.position;
-            bulletStartPos.z += 2;
+			bulletStartPos += ((transform.forward.normalized) * 4.0f);
             GameObject bullet = (GameObject)Instantiate (bulletPrefab, bulletStartPos, transform.localRotation);
             bullet.transform.parent = stage.transform;
-            bullet.transform.rotation = Quaternion.AngleAxis (90, Vector3.right);
+			bullet.transform.rotation = transform.rotation;
+            bullet.transform.rotation *= Quaternion.AngleAxis (90, Vector3.right);
+
 
             Vector3 speedVector = transform.forward;
             bullet.rigidbody.velocity = speedVector * 256.0f;
