@@ -6,7 +6,6 @@ public class Bullet : MonoBehaviour
     float lifeTime = 6.0f;
 
 
-
     // Use this for initialization
     void Start ()
     {

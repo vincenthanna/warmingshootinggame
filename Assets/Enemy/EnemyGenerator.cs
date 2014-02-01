@@ -23,9 +23,13 @@ public class EnemyGenerator : MonoBehaviour {
             pos.x = Random.Range (-80,80);
 
             GameObject inst = (GameObject)Instantiate (enemyPrefabs[0], pos, Quaternion.identity);
-            
-            // 이것이 핵심
-            //inst.transform.parent = gameObject.transform;
+
+            /*
+            Debug.Log (string.Format("EnemyGenerator pos={0} localPosition={1}", gameObject.transform.position,
+                                     gameObject.transform.localPosition));
+                                     */
+
+            // make child of stage :
             inst.transform.parent = stage.transform;
         }
 	}

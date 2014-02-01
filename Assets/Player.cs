@@ -8,6 +8,13 @@ public class Player : MonoBehaviour
     public AudioClip[] gunsound;
     float fireTimer = 0.0f, fireTimerTime = 0.08f;
 
+    // rotation variables
+    float rotatePower = 0.0f;
+    float rotatePowerMax = 64.0f;
+    float rotatePowerIncValue = 2.0f;
+    float rotateDirectionLast = 0.0f;
+
+
     // Use this for initialization
     void Start ()
     {
@@ -74,8 +81,7 @@ public class Player : MonoBehaviour
         //Debug.Log (string.Format("bottomLeft={0} topRight={1} playerPos={2}", blPos,rtPos, pos));
 
 
-        Debug.Log (string.Format ("player position={0} localPosition={1}",
-                                  transform.position, transform.localPosition));
+        //Debug.Log (string.Format ("player position={0} localPosition={1}", transform.position, transform.localPosition));
 
         transform.localPosition = pos;
 
@@ -83,17 +89,46 @@ public class Player : MonoBehaviour
         //////////////////////////////////////////////////////
         /// process rotation
 
+        //float rotatePower = 0.0f;
+        //float rotateDirectionLast = 0.0f;
 
         float rotateRate = 0.0f;
+        float rotateDirection = 0.0f;
         if (Input.GetKey ("z")) {
             rotateRate -= 1.0f;
+            rotateDirection = -1.0f;
         }
         if (Input.GetKey ("x")) {
             rotateRate += 1.0f;
+            rotateDirection = 1.0f;
         }
+
+        if (rotateDirection != rotateDirectionLast) {
+            rotatePower = 1.0f;
+            Debug.Log("rotatePower reset!");
+        }
+        else {
+            rotatePower += rotatePowerIncValue;
+        }
+
+        rotatePower = Mathf.Min (rotatePower, rotatePowerMax);
+
+        rotateDirectionLast = rotateDirection;
+
         if (rotateRate != 0.0f) {
-            transform.rotation *= Quaternion.AngleAxis (rotateRate * 4.0f, new Vector3 (0, 1, 0));
+
+            //transform.rotation *= Quaternion.AngleAxis (rotateRate * rotatePower, new Vector3 (0, 1, 0));
+
+            float speed = 4.0f;
+            transform.rotation = Quaternion.Lerp(transform.rotation,
+                                 transform.rotation * Quaternion.AngleAxis (rotateRate * rotatePower, new Vector3 (0, 1, 0)),
+                                                 Time.deltaTime*speed);
+
+            //Debug.Log (string.Format("rotatePower={0}", rotatePower));
         }
+
+        //////////////////////////////////////////////////////
+        /// process fire
 
 
         fireTimer -= Time.deltaTime;

@@ -31,6 +31,20 @@ public class Enemy : MonoBehaviour
         rigidbody.transform.forward = targetVector.normalized;
 
         mainCamera = (GameObject)GameObject.FindWithTag ("MainCamera");
+
+
+        switch (enemyType) {
+        case enumEnemyType.ENEMY_TYPE_002:
+        case enumEnemyType.ENEMY_TYPE_003:
+        case enumEnemyType.ENEMY_TYPE_004:
+        case enumEnemyType.ENEMY_TYPE_005:
+            {
+                Vector3 fv = new Vector3 (0, 0, -1);
+                rigidbody.transform.forward = fv;
+                rigidbody.velocity = fv * 64.0f;
+            }
+            break;
+        }
     }
     
     // Update is called once per frame
@@ -58,11 +72,13 @@ public class Enemy : MonoBehaviour
             case enumEnemyType.ENEMY_TYPE_003:
             case enumEnemyType.ENEMY_TYPE_004:
             case enumEnemyType.ENEMY_TYPE_005:
+                /*
                 {
                     Vector3 forwardVector = new Vector3 (0, 0, -1);
                     rigidbody.transform.forward = forwardVector;
                     rigidbody.velocity = forwardVector * 64.0f;
                 }
+                */
                 break;
             }
 
